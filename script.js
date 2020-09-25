@@ -4,6 +4,8 @@ var confirmNum;
 var confirmLower;
 var confirmUpper;
 var confirmSpecial;
+var password;
+
 var passwordChar = {
   num: "0123456789",
   lowerCase: "abcdefghijklmnopqrstuvwxyz",
@@ -18,10 +20,13 @@ function writePassword() {
 
   while ((passwordLength === null) || (passwordLength < 8) || (passwordLength > 128)) {
     passwordLength = prompt("Please choose a password length between 8 to 128 characters.");
+    //
     console.log(passwordLength);
 
-    if ((passwordLength > 8) || (passwordLength < 128 )){
+    if ((passwordLength > 8) || (passwordLength < 128)) {
+      //
       console.log(passwordLength)
+
       confirmNum = confirm("Do you want numbers?");
       confirmLower = confirm("Do you want lowercase letters?");
       confirmUpper = confirm("Do you want uppercase letters?");
@@ -29,7 +34,7 @@ function writePassword() {
     }
 
     if (confirmNum !== true) {
-      // numbers = "";
+
       passwordChar = remove(passwordChar.num);
     }
 
@@ -49,16 +54,15 @@ function writePassword() {
       prompt("Please select AT LEAST two of the criterias.");
     }
 
-  }
-
     for (var i = 0; i < passwordLength; i++) {
-      var word = Math.floor(Math.random()*passwordChar.length);
-      
+      var words = Math.floor(Math.random() * passwordChar.length);
+      password = passwordChar[words];
     }
+    var passwordText = document.querySelector("#password");
+    passwordText.value = password;
 
-   passwordText.value = password;
-
-}
+  }
+};
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
