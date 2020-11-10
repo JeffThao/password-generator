@@ -4,14 +4,12 @@ var confirmNum;
 var confirmLower;
 var confirmUpper;
 var confirmSpecial;
-var password;
 
-var passwordChar = {
-  num: "0123456789",
-  lowerCase: "abcdefghijklmnopqrstuvwxyz",
-  upperCase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-  specialChar: "~!@#$%&-+=_"
-};
+var specialArr=["~","!","@","#", "$","%","&", "-", "+", "=", "_"];
+var numArr=[0,1,2,3,4,5,6,7,8,9];
+var lowerArr=["a","b","c", "d", "e", "f", "g" ,"h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+var upperArr=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+var userArr=[];
 
 //Write password to the #password input
 function writePassword() {
@@ -25,7 +23,7 @@ function writePassword() {
     console.log(passwordLength);
 
     if ((passwordLength > 8) || (passwordLength < 128)) {
-      //
+    
       console.log(passwordLength)
 
       confirmNum = confirm("Do you want numbers?");
@@ -33,34 +31,45 @@ function writePassword() {
       confirmUpper = confirm("Do you want uppercase letters?");
       confirmSpecial = confirm("Do you want special characters? (~!@#$%&-+=_)");
     }
-
-    if (confirmNum !== true) {
-
-      passwordChar = remove(passwordChar.num);
+    if(confirmLower){
+      //push the lowerArr into userArr
+      userArr.push(lowerArr);
     }
-
-    if (confirmLower !== true) {
-      passwordChar = remove(passwordChar.lowerCase);
+    if(confirmNum){
+      //push the lowerArr into userArr
+      userArr.push(numArr);
     }
-
-    if (confirmUpper !== true) {
-      passwordChar = remove(passwordChar.upperCase);
+    if(confirmSpecial){
+      //push the lowerArr into userArr
+      userArr.push(specialArr);
     }
-
-    if (confirmSpecial !== true) {
-      passwordChar = remove(passwordChar.specialChar);
+    if(confirmUpper){
+      //push the lowerArr into userArr
+      userArr.push(upperArr);
     }
 
     if ((confirmNum !== true) && (confirmLower !== true) && (confirmUpper !== true) && (confirmSpecial !== true)) {
-      prompt("Please select AT LEAST two of the criterias.");
+      alert("Please select AT LEAST two of the criterias.");
     }
+    console.log(userArr);
+    var finalpw="";
 
     for (var i = 0; i < passwordLength; i++) {
-      var words = Math.floor(Math.random() * passwordChar.length);
-      password = passwordChar[words];
+      if(i<userArr.length){
+        firstIndex=i;
+      }
+      else{
+
+      firstIndex=( Math.floor(Math.random() * ((userArr.length) - 0) + 0))
+      }
+
+     var secondIndex=( Math.floor(Math.random() * ((userArr[firstIndex].length-1) - 0) + 0))
+      
+      finalpw+=userArr[firstIndex][secondIndex];
     }
+
     var passwordText = document.querySelector("#password");
-    passwordText.value = password;
+    passwordText.value = finalpw;
 
 };
 
